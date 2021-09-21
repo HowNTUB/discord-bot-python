@@ -30,11 +30,6 @@ async def 骰子(ctx):
     await ctx.send(f'骰子丟到{random.randint(1, 6)}')
 
 @client.command(pass_context = True)
-async def 來(ctx):
-    voiceChannel = ctx.message.author.voice.channel
-    await voiceChannel.connect()
-    
-@client.command(pass_context = True)
 async def 放音樂(ctx, url : str):
     song_there = os.path.isfile("song.mp3")
     try:
@@ -42,7 +37,9 @@ async def 放音樂(ctx, url : str):
             os.remove("song.mp3")
     except PermissionError:
         await ctx.send("等待目前的音樂播放結束")
-        
+
+    voiceChannel = ctx.message.author.voice.channel
+    await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     
     ydl_opts = {
